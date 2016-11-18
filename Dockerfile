@@ -35,6 +35,7 @@ RUN \
         libffi-dev\
         openssl-dev \
         make \
+        git \
         python-dev && \
 
 # install pip packages
