@@ -18,33 +18,33 @@ COPY start.sh /start.sh
 # install runtime packages
 RUN \
  apk --update add --no-cache \
-        ca-certificates \
-        python \
-        py-pip \
-        py-libxml2 \
-        py-lxml \
-        build-base && \
+       ca-certificates \
+       python \
+       py-pip \
+       py-libxml2 \
+       py-lxml \
+       build-base && \
 
 # update certificates
  update-ca-certificates && \
 
 # install build packages
  apk add --no-cache --virtual=build-dependencies \
-        g++ \
-        gcc \
-        libffi-dev\
-        openssl-dev \
-        make \
-        git \
-        python-dev && \
+       g++ \
+       gcc \
+       libffi-dev\
+       openssl-dev \
+       make \
+       git \
+       python-dev && \
 
 # install pip packages
  pip install --no-cache-dir -U \
-        incremental \
-        pip && \
+       incremental \
+       pip && \
  pip install --no-cache-dir -U \
-        setuptools \
-        pyopenssl && \
+       setuptools \
+       pyopenssl && \
 
 # get CouchPotatoServer software
  git clone --depth 1 https://github.com/RuudBurger/CouchPotatoServer.git /CouchPotatoServer && \
@@ -52,12 +52,12 @@ RUN \
 # cleanup
  cd / && \
  apk del --purge \
-        build-dependencies && \
+       build-dependencies && \
  rm -rf \
-        /var/cache/apk/* \
-        /tmp/src \
-        /CouchPotatoServer/.git \
-        /tmp/*
+       /var/cache/apk/* \
+       /tmp/src \
+       /CouchPotatoServer/.git \
+       /tmp/*
 
 # user with access to media files and config
 RUN adduser -D -u ${appGroup} ${appUser}
