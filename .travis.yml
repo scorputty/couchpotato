@@ -1,0 +1,20 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - appUser="media"
+    - appGroup="1000"
+
+install:
+  - docker build --rm --no-cache -t scorputty/couchpotato ../couchpotato
+
+script:
+  - ./rundocker.sh
+  - sleep 10
+  - bats tests/
+
+notifications:
+  email: false
