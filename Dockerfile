@@ -28,7 +28,7 @@ RUN \
 # update certificates
  update-ca-certificates && \
 
-# install build packages
+# install build packages (these will be removed later)
  apk add --no-cache --virtual=build-dependencies \
        g++ \
        gcc \
