@@ -15,31 +15,48 @@ EXPOSE 5050
 # copy the start script to the container
 COPY start.sh /start.sh
 
-# start building the software tree
-RUN buildDeps="gcc g++ git make python-dev openssl-dev libffi-dev" \
-  && apk --update add $buildDeps \
-  && apk add \
-      python \
-      py-pip \
-      py-libxml2 \
-      py-lxml \
-      build-base \
-      ca-certificates \
-  && pip install --upgrade pip --no-cache-dir \
-  && pip install --upgrade setuptools --no-cache-dir \
-  && pip install --upgrade pyopenssl --no-cache-dir \
+# install runtime packages
+RUN \
+ apk add --no-cache \
+        ca-certificates \
+        python \
+        py-pip \
+        py-libxml2 \
+        py-lxml \
+        build-base && \
 
-  # get CouchPotatoServer software
-  && git clone --depth 1 https://github.com/RuudBurger/CouchPotatoServer.git /CouchPotatoServer \
-  && cd / \
+# update certificates
+ update-ca-certificates && \
 
-  # cleanup
-  && apk del $buildDeps \
-  && rm -rf \
-    /var/cache/apk/* \
-    /tmp/src \
-    /CouchPotatoServer/.git \
-    /tmp/*
+# install build packages
+ apk add --no-cache --virtual=build-dependencies \
+        g++ \
+        gcc \
+        libffi-dev\
+        openssl-dev \
+        make \
+        python-dev && \
+
+# install pip packages
+ pip install --no-cache-dir -U \
+        incremental \
+        pip && \
+ pip install --no-cache-dir -U \
+        setuptools \
+        pyopenssl && \
+
+# get CouchPotatoServer software
+  git clone --depth 1 https://github.com/RuudBurger/CouchPotatoServer.git /CouchPotatoServer && \
+
+# cleanup
+ cd / && \
+ apk del --purge \
+        build-dependencies && \
+ rm -rf \
+        /var/cache/apk/* \
+        /tmp/src \
+        /CouchPotatoServer/.git \
+        /tmp/*
 
 # user with access to media files and config
 RUN adduser -D -u ${appGroup} ${appUser}
