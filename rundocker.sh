@@ -12,7 +12,7 @@ docker run -d -h $(hostname) \
   -v ${VOL_CONFIG}:/config \
   -v ${VOL_DATA}:/data \
   -p ${LOCAL_PORT}:5050 \
-  --restart=always scorputty/couchpotato
+  --restart=always cryptout/couchpotato
 # for troubleshooting use this start command to get a shell
 # docker run -ti -h $(hostname) \
 #   -v ${VOL_CONFIG}:/config \
