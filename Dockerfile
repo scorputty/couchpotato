@@ -47,7 +47,7 @@ RUN \
         pyopenssl && \
 
 # get CouchPotatoServer software
-  git clone --depth 1 https://github.com/RuudBurger/CouchPotatoServer.git /CouchPotatoServer && \
+ git clone --depth 1 https://github.com/RuudBurger/CouchPotatoServer.git /CouchPotatoServer && \
 
 # cleanup
  cd / && \
