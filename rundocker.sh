@@ -6,7 +6,7 @@ VOL_DATA="/Volumes/shares/docker/data"
 LOCAL_PORT="5050"
 
 test -d ${VOL_CONFIG} || VOL_CONFIG="${PWD}${VOL_CONFIG}" && mkdir -p ${VOL_CONFIG}
-test -d ${VOL_DATA} || VOL_DOWNLOADS="${PWD}${VOL_DATA}" && mkdir -p ${VOL_DATA}
+test -d ${VOL_DATA} || VOL_DATA="${PWD}${VOL_DATA}" && mkdir -p ${VOL_DATA}
 
 docker run -d -h $(hostname) \
   -v ${VOL_CONFIG}:/config \
