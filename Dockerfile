@@ -17,7 +17,7 @@ COPY start.sh /start.sh
 
 # install runtime packages
 RUN \
- apk add --no-cache \
+ apk --update add --no-cache \
         ca-certificates \
         python \
         py-pip \
