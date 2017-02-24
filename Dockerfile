@@ -60,7 +60,6 @@ RUN \
  rm -rf \
        /var/cache/apk/* \
        /tmp/src \
-       /CouchPotatoServer/.git \
        /tmp/*
 
 # user with access to media files and config
