@@ -1,23 +1,11 @@
-[![Build Status](https://travis-ci.org/scorputty/couchpotato.svg?branch=master)](https://travis-ci.org/scorputty/couchpotato)
+[![Build Status](https://travis-ci.org/scorputty/couchpotato.svg?branch=master)](https://travis-ci.org/scorputty/couchpotato)[![](https://images.microbadger.com/badges/image/cryptout/couchpotato.svg)](https://microbadger.com/images/cryptout/couchpotato "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/cryptout/couchpotato.svg)](https://microbadger.com/images/cryptout/couchpotato "Get your own version badge on microbadger.com")
 
-# Docker CouchPotato (Alpine Base)
+# Docker CouchPotato (Alpine)
 
-This is a Dockerfile to set up "CouchPotato" - (https://couchpota.to/).
+This is a Dockerfile to build "CouchPotato" - (https://couchpota.to/).
 
 ### Docker Hub
 The built image is also hosted at Docker Hub - (https://hub.docker.com/r/cryptout/couchpotato/).
-If you don't want to customize the container you can run it directly by typing the following commands.
-```sh
-export VOL_CONFIG="/Volumes/shares/docker/config/couchpotato"
-export VOL_DATA="/Volumes/shares/docker/data"
-export LOCAL_PORT="5050"
-
-docker run -d -h $(hostname) \
-  -v ${VOL_CONFIG}:/config \
-  -v ${VOL_DATA}:/data \
-  -p ${LOCAL_PORT}:5050 \
-  --name=couchpotato --restart=always cryptout/couchpotato
-```
 
 # Build from Dockerfile
 Clone this repository and run the build.sh script.
@@ -25,25 +13,6 @@ Clone this repository and run the build.sh script.
 git clone https://github.com/scorputty/couchpotato.git
 cd couchpotato
 ./build.sh
-```
-
-### Variables
-Change to match your situation.
-```Dockerfile
-ENV appUser="media"
-ENV appGroup="1000"
-```
-
-### Volumes
-Make sure to map the Volumes to match your situation.
-```Dockerfile
-VOLUME ["/config", "/data"]
-```
-
-### To run the container
-Edit rundocker.sh (this will be replaced by docker-compose soon...).
-```sh
-./rundocker.sh
 ```
 
 ### WebGUI
