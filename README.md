@@ -15,6 +15,25 @@ cd couchpotato
 ./build.sh
 ```
 
+# Docker compose example
+```
+couchpotato:
+  container_name: couchpotato
+  image: docker.io/cryptout/couchpotato
+  hostname: couchpotato
+  network_mode: host
+  environment:
+    - TZ=Europe/Amsterdam
+    - USER=media
+    - USERID=10000
+    - PUID=10000
+    - PGID=10000
+    - ENV appUser=media
+    - ENV appGroup=media
+  volumes:
+    - /share:/share
+```
+
 ### WebGUI
 To reach the WebGUI go to - (http://localhost:5050).
 Or replace localhost with your target IP.
