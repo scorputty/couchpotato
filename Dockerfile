@@ -26,6 +26,7 @@ RUN \
        python \
        py-libxml2 \
        py-lxml \
+       openssl-dev \
        unrar \
        tzdata \
        build-base && \
@@ -38,7 +39,6 @@ RUN \
        g++ \
        gcc \
        libffi-dev\
-       openssl-dev \
        make \
        python-dev && \
 
