@@ -1,4 +1,7 @@
-@test "Opening CouchPotato on port 5050" {
-  run curl http://localhost:5050
-  [ "${status}" -eq 0 ]
+#!/usr/bin/env bats
+
+@test "Opening Couchpotato on port 8081" {
+  skip
+  curl -I -s -X GET http://localhost:8081 |grep 302
+  [ "$status" -eq 0 ]
 }

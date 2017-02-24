@@ -1,13 +1,13 @@
 FROM alpine:latest
 MAINTAINER scorputty
-LABEL Description="CouchPotato" Vendor="S Corputty" Version="3.0.1"
+LABEL Description="CouchPotato" Vendor="S Corputty" Version="0.0.1"
 
 # variables
+ENV TZ="Europe/Amsterdam"
 ENV appUser="media"
-ENV appGroup="1000"
-
-# mounted volumes should be mapped to media files and config with the run command
-VOLUME ["/config", "/data"]
+ENV appGroup="media"
+ENV PUID="10000"
+ENV PGID="10000"
 
 # ports should be mapped with the run command to match your situation
 EXPOSE 5050
@@ -19,10 +19,15 @@ COPY start.sh /start.sh
 RUN \
  apk --update add --no-cache \
        ca-certificates \
+       bash \
+       su-exec \
+       py2-pip \
+       git \
        python \
-       py-pip \
        py-libxml2 \
        py-lxml \
+       unrar \
+       tzdata \
        build-base && \
 
 # update certificates
@@ -35,7 +40,6 @@ RUN \
        libffi-dev\
        openssl-dev \
        make \
-       git \
        python-dev && \
 
 # install pip packages
@@ -60,16 +64,23 @@ RUN \
        /tmp/*
 
 # user with access to media files and config
-RUN adduser -D -u ${appGroup} ${appUser}
+RUN addgroup -g ${PGID} ${appGroup} && \
+  adduser -G ${appGroup} -D -u ${PUID} ${appUser}
+
+# create dir to be mounted over by volume
+RUN mkdir -p /share/config/sickrage && touch /share/config/sickrage/tag.txt
 
 # make media user owner of the software
-RUN chown -R ${appGroup}:${appUser} /CouchPotatoServer
+RUN chown -R ${appGroup}:${appUser} /start.sh /CouchPotatoServer /share
 
-# switch to application directory
-WORKDIR /CouchPotatoServer
+# make sure start.sh is executable
+RUN chmod u+x  /start.sh
 
-# switch to user media
-USER media
+# switch to App user
+USER ${appUser}
+
+# single mounted shared volume
+VOLUME ["/share"]
 
 # start application
 CMD ["/start.sh"]
